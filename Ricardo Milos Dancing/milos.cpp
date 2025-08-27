@@ -1,6 +1,7 @@
 /*
+[PT-BR]
 Desenvolvedor desta blasfêmia: Francisco Passos
-Arrependimento em: 27/080/2025
+Arrependimento em: 27/08/2025
 
 Este programa foi desenvolvido para ver o quão longe um ser consegue chegar com a biblioteca Raylib no C++
 Para ver o quão distante Deus está da humanidade e o quanto a mesma se encontra perdida
@@ -17,6 +18,26 @@ Não sou digno de ser teu filho, oh meu pai! Não sou digno de tua herança
 
 "Não tive filhos. Não passei a nenhuma criatura o legado de nossa miséria..."
 ~ Assis, Machado - 1800 e não sei o que
+
+
+[EN-US]
+Developer of this blasphemy: Francisco Passos
+Repentance on: 08/27/2025
+
+This program was developed to see how far a being can go with the Raylib library in C++.
+To see how far God is from humanity and how lost it is.
+
+If human beings had such knowledge, what misfortunes could be done? How many blasphemies could be uttered?
+This project seeks to answer that...
+No creature deserves divine forgiveness, especially those who developed this scum. 
+
+Forgive me, raysan5; forgive me, Bjarne Stroustrup; forgive me, Holy God, for I am not worthy of your forgiveness. 
+I am not worthy to be your son, oh my father! I am not worthy of your inheritance.
+
+“The apocalypse ceased to be a fear and became a hope...”
+~ Unknown
+
+“I had no children. I did not pass on the legacy of our misery to any creature...”
 */
 
 #include <iostream>
@@ -28,7 +49,7 @@ namespace ray{
 }
 
 int main(){
-    ray::InitWindow(224, 224, "Milos");
+    ray::InitWindow(224, 224, "Milos"); 
     
     //Responsável por tocar a música
     ray::InitAudioDevice();
@@ -47,7 +68,7 @@ int main(){
     const float frame_duration = 0.07f; // tempo de cada frame
 
     while (!ray::WindowShouldClose()) {
-        // Atualiza a 1imagem
+        // Atualiza a imagem sem que o programa estiver em funcionamento
         frame_timer += ray::GetFrameTime();
         if (frame_timer >= frame_duration) {
             current_frame = (current_frame + 1) % frame_count; 
@@ -58,7 +79,6 @@ int main(){
         ray::DrawTexture(frames[current_frame], 0, 0, ray::WHITE);
         ray::EndDrawing();
     }
-
     for (auto &t : frames) ray::UnloadTexture(t);
     ray::UnloadSound(sound);
     ray::CloseAudioDevice();
