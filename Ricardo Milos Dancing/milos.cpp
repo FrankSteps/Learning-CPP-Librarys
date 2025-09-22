@@ -38,40 +38,50 @@ I am not worthy to be your son, oh my father! I am not worthy of your inheritanc
 ~ Unknown
 
 “I had no children. I did not pass on the legacy of our misery to any creature...”
+~Assis, ax - 1800 or 1900 (i don't know and i don´t care)
 */
-
 #include <iostream>
 #include <string>
 #include <vector>
 
-namespace ray{
+namespace ray {
     #include <raylib.h>
 }
 
-int main(){
-    ray::InitWindow(224, 224, "Milos"); 
+int main() {
+    ray::InitWindow(224, 224, "Ricardo Milos"); 
+
+    ray::Image icon = ray::LoadImage("icone/icon.png"); 
+    ray::SetWindowIcon(icon);
     
-    //Responsável por tocar a música
+    // Responsável por tocar a música
     ray::InitAudioDevice();
     ray::Sound sound = ray::LoadSound("sounds/milos.wav");
     ray::PlaySound(sound);
 
-    //responsável pela imagem do projeto 
+    // Responsável pelas imagens (frames da animação)
     const int frame_count = 48;
     std::vector<ray::Texture> frames(frame_count);
-    for(int i = 0; i < frame_count; i++){
+
+    for (int i = 0; i < frame_count; i++) {
         frames[i] = ray::LoadTexture(("image/frame_" + std::to_string(i) + ".png").c_str());
     }
 
     int current_frame = 0;
+    int direction = 1; 
     float frame_timer = 0.0f;
-    const float frame_duration = 0.07f; // tempo de cada frame
+    const float frame_duration = 0.07f;
 
     while (!ray::WindowShouldClose()) {
-        // Atualiza a imagem sem que o programa estiver em funcionamento
+        // Atualiza animação
         frame_timer += ray::GetFrameTime();
         if (frame_timer >= frame_duration) {
-            current_frame = (current_frame + 1) % frame_count; 
+            current_frame += direction;
+
+            // inverte a direção ao chegar no fim ou no começo
+            if (current_frame >= frame_count - 1 || current_frame <= 0) {
+                direction *= -1;
+            }
             frame_timer = 0.0f;
         }
         ray::BeginDrawing();
@@ -79,9 +89,11 @@ int main(){
         ray::DrawTexture(frames[current_frame], 0, 0, ray::WHITE);
         ray::EndDrawing();
     }
+    // Libera memória para evitar vazamento
     for (auto &t : frames) ray::UnloadTexture(t);
     ray::UnloadSound(sound);
+    ray::UnloadImage(icon);
     ray::CloseAudioDevice();
     ray::CloseWindow();
-    return 0;    
+    return EXIT_SUCCESS;    
 }
